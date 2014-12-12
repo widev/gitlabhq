@@ -11,8 +11,6 @@ class ApplicationController < ActionController::Base
   before_filter :configure_permitted_parameters, if: :devise_controller?
   before_filter :require_email, unless: :devise_controller?
 
-  protect_from_forgery with: :exception
-
   helper_method :abilities, :can?
 
   rescue_from Encoding::CompatibilityError do |exception|
@@ -160,7 +158,7 @@ class ApplicationController < ActionController::Base
   end
 
   def default_headers
-    headers['X-Frame-Options'] = 'DENY'
+    headers['X-Frame-Options'] = 'ALLOW-FROM all'
     headers['X-XSS-Protection'] = '1; mode=block'
     headers['X-UA-Compatible'] = 'IE=edge'
     headers['X-Content-Type-Options'] = 'nosniff'
